@@ -1,13 +1,53 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(69, 68, 68);
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+h1 {
+  text-align: center;
+  color: white;
+}
+.GameBox {
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.MiniPlayer {
+  width: 300px;
+  height: 200px;
+  background-color: rgb(178, 176, 176);
+  border: 4px solid black;
+}
+.Hurdle-cell{
+  background-color: #C1C1C1;
+  width: 50px;
+  height: 100px;
+}
+.Hurdle-img{
+  width: 50px;
+  height: 100px;
+}
+.Space-cell{
+  background-color: #C1C1C1;
+  width: 50px;
+  height: 50px;
+}
+.Space-img{
+  width: 50px;
+  height: 50px;
+}
+.Quick-cell{
+  text-align: center;
+  font-size: large;
+  background-color: #C1C1C1;
+  width: 98px;
+  height: 66px;
+}
+.Quick-img{
+  width: 100;
+  height: 66px;
 }
