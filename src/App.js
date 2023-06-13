@@ -1,19 +1,22 @@
 import { HurdleRun } from "./components/Hurdlerun/Hurdlerun.js";
 import { PersonalSpace } from "./components/Personalspace/Personalspace.js";
 import { QuickMaths } from "./components/Quickmaths/Quickmaths.js";
-import {Points} from "./store/Points.js"
+import { Points } from "./store/Points.js";
 import { useContext } from "react";
+import { Keystroke } from "./controls/Keystroke.js";
 
 function App() {
-  const pointsCtx = useContext(Points)
+  const pointsCtx = useContext(Points);
+
   return (
     <div className="App">
+
       <h1>Points: {pointsCtx.points}</h1>
       {/* bruk context provider til å legge til poeng fra alle spill */}
       <div className="GameBox">
-        <HurdleRun text="enkelt spill som du styrer med spacebar"/>
-        <PersonalSpace text="bruk piltaster for å flytte og skyte"/>
-        <QuickMaths text="tall og enter for å løse matteoppgaver"/>
+        <HurdleRun text="enkelt spill som du styrer med spacebar" />
+        <PersonalSpace text="bruk piltaster for å flytte og skyte" />
+        <QuickMaths text="tall og enter for å løse matteoppgaver" />
       </div>
     </div>
   );

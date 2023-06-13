@@ -1,18 +1,21 @@
 import { useState, useContext } from "react";
 import { Restart } from "./QuestionRow";
 import { MathProblem } from "../../../store/QuickMathsWrapper";
+import { Keystroke } from "../../../controls/Keystroke";
 
 function AnswerRow() {
   const [userNum, setUserNum] = useState(0);
   const mathsCtx = useContext(MathProblem);
   const newQuestion = useContext(Restart);
 
-  function inputHandler(event) {
-    if (event.key === "Enter") console.log("great sucess");
-  }
+  const handleKeyPress = (e) => {
+    if(e.key === "q")console.log("Quick Triggered");
+  };
+  
+
   return (
     <div>
-      <input type="text" value="trykk enter" onKeyDown={inputHandler} />
+      <Keystroke keyPress={handleKeyPress} />
     </div>
   );
 }
