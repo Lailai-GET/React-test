@@ -1,41 +1,24 @@
-import { useState, useContext, createContext } from "react";
-import { MathProblem } from "../../../store/QuickMathsWrapper";
+import { useState, useEffect } from "react";
+import { useMathProblem } from "../store/QuickMathsWrapper";
 
-const Restart = createContext({});
 
-function QuestionRow(props) {
-  const QuestionCtx = useContext(MathProblem);
-  const [q1, setQ1] = useState(5);
-  const [q2, setQ2] = useState(3);
+function QuestionRow() {
 
-  function randomNum() {
-    return Math.floor(Math.random() * 8) + 1;
-  }
-  function q1Handler() {
-    setQ1(q1 >= 0 ?? randomNum());
-    QuestionCtx.firstQ(q1);
-  }
-  function q2Handler() {
-    setQ2(q2 >= 0 ?? randomNum());
-    QuestionCtx.secondQ(q2);
-  }
-  function newQuestion() {
-    q1Handler();
-    q2Handler();
-  }
-  const context = {
-    nextQuestion: newQuestion,
-  };
+
+  const questionCtx = useMathProblem();
+  const [q1, setQ1] = useState(questionCtx.firstQValue);
+  const [q2, setQ2] = useState(questionCtx.secondQValue);
+  useEffect(()=>{
+    setQ1(questionCtx.firstQValue);
+    setQ2(questionCtx.secondQValue);
+  }, [questionCtx.firstQValue, questionCtx.secondQValue]);
+
   return (
-    <Restart.Provider value="context">
-      <tr>
-        <td className="Quick-cell">{q1}</td>
-        <td className="Quick-cell">+</td>
-        <td className="Quick-cell">{q2}</td>
-      </tr>
-      {props.children}
-    </Restart.Provider>
+    <tr>
+      <td className="Quick-cell">{q1}</td>
+      <td className="Quick-cell">+</td>
+      <td className="Quick-cell">{q2}</td>
+    </tr>
   );
 }
 export { QuestionRow };
-export {Restart};

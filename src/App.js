@@ -3,7 +3,6 @@ import { PersonalSpace } from "./components/Personalspace/Personalspace.js";
 import { QuickMaths } from "./components/Quickmaths/Quickmaths.js";
 import { Points } from "./store/Points.js";
 import { useContext } from "react";
-import { Keystroke } from "./controls/Keystroke.js";
 
 function App() {
   const pointsCtx = useContext(Points);

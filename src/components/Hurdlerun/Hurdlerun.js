@@ -15,7 +15,7 @@ function HurdleRun(props) {
   }
   function resetPointsHandler() {
     pointsCtx.resetPoints();
-    setCount(count >= 1 ?? 0);
+    setCount(count - count);
   }
 
 

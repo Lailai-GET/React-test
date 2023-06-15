@@ -44,10 +44,10 @@ h1 {
   text-align: center;
   font-size: large;
   background-color: #C1C1C1;
-  width: 98px;
+  width: 95px;
   height: 66px;
 }
 .Quick-img{
-  width: 100;
-  height: 66px;
+  width: 100%;
+  height: 100%;
 }

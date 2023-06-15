@@ -12,7 +12,7 @@ function PersonalSpace(props) {
   }
   function resetPointsHandler() {
     pointsCtx.resetPoints();
-    setCount(count >= 1 ?? 0);
+    setCount(0);
   }
   const handleKeyPress = (e) => {
     if(e.key === "p")console.log("Personal Triggered");

@@ -1,22 +1,21 @@
-import { useState, useContext } from "react";
-import { Restart } from "./QuestionRow";
-import { MathProblem } from "../../../store/QuickMathsWrapper";
-import { Keystroke } from "../../../controls/Keystroke";
+import { useState, useEffect } from "react";
+import { useMathProblem } from "../store/QuickMathsWrapper";
 
 function AnswerRow() {
-  const [userNum, setUserNum] = useState(0);
-  const mathsCtx = useContext(MathProblem);
-  const newQuestion = useContext(Restart);
+  const mathsCtx = useMathProblem();
 
-  const handleKeyPress = (e) => {
-    if(e.key === "q")console.log("Quick Triggered");
-  };
-  
+  const [userNum, setUserNum] = useState([]);
+  useEffect (() => {
+    setUserNum(mathsCtx.answerValue);
+  }, [mathsCtx.answerValue]);
+
 
   return (
-    <div>
-      <Keystroke keyPress={handleKeyPress} />
-    </div>
+      <tr>
+        <td className="Quick-cell">Your answer:</td>
+        <td className="Quick-cell">{userNum}</td>
+        <td className="Quick-cell">Hit "Enter" to submit</td>
+      </tr>
   );
 }
 export { AnswerRow };
