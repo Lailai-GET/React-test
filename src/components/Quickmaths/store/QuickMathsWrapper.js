@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext, useEffect } from "react";
 import { Points } from "../../../store/Points";
 import { Keystroke } from "../../../controls/Keystroke";
 
@@ -7,17 +7,36 @@ const MathProblem = createContext({
   firstQValue: 5,
   secondQValue: 8,
   answerValue: 0,
-  isCorrect: false,
-  timerOut: ()=>{}
+  isCorrect: "start",
+  timerValue: 0,
 });
 
 export function QuickMathsWrapper({ children }) {
   const [localPoints, setLocalPoints] = useState(0);
-  const [isCorrect, setIsCorrect] = useState(false);
+  const [isCorrect, setIsCorrect] = useState("start");
   const [firstQ, setFirstQ] = useState(randomNum());
   const [secondQ, setSecondQ] = useState(randomNum());
   const [answer, setAnswer] = useState([]);
+  const [timerValue, setTimerValue] = useState(500);
+
   const pointsCtx = useContext(Points);
+
+  
+  useEffect(() => {
+    increment()
+  }, []);
+  
+  function increment() {
+    console.log("trigger warning");
+    setTimerValue(timerValue - 50);
+    setTimeout(() => {
+      increment();
+    }, 500);
+    if (timerValue <= 0) {
+      timesUp();
+      return;
+    }
+  };
 
   const context = {
     localPoints: localPoints,
@@ -25,7 +44,7 @@ export function QuickMathsWrapper({ children }) {
     answerValue: answer,
     firstQValue: firstQ,
     secondQValue: secondQ,
-    timerOut: timerReset
+    timerValue: timerValue,
   };
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -51,15 +70,17 @@ export function QuickMathsWrapper({ children }) {
     }
   };
 
+  
   function newQuestion() {
+    setTimerValue(1000);
     firstQHandler();
     secondQHandler();
   }
-
+  
   function randomNum() {
     return Math.floor(Math.random() * 8) + 1;
   }
-
+  
   function firstQHandler() {
     setFirstQ(randomNum());
   }
@@ -68,10 +89,10 @@ export function QuickMathsWrapper({ children }) {
   }
   function calculationHandler(submittedAnswer) {
     if (submittedAnswer == firstQ + secondQ) {
-      setIsCorrect(true);
+      setIsCorrect("correct");
       addPointHandler();
     } else {
-      setIsCorrect(false);
+      setIsCorrect("incorrect");
       resetPointsHandler();
     }
     newQuestion();
@@ -84,8 +105,8 @@ export function QuickMathsWrapper({ children }) {
     setLocalPoints(0);
     pointsCtx.resetPoints();
   }
-  function timerReset(){
-    setIsCorrect(false);
+  function timesUp() {
+    setIsCorrect("outatime");
     resetPointsHandler();
     newQuestion();
   }

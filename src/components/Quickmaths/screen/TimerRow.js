@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { useMathProblem } from "../store/QuickMathsWrapper";
+import startImg from "../img/Start.png";
 import correctImg from "../img/Correct.png";
 import incorrectImg from "../img/Incorrect.png";
+import outatimeImg from "../img/Outatime.png";
 
 function TimerRow() {
   const mathsCtx = useMathProblem();
   const [lastAnswerState, setLastAnswerState] = useState(false);
   const [localPoints, setLocalPoints] = useState(0);
+  const [ timerValue, setTimerValue ] = useState(1000);
 
   useEffect(() => {
     setLastAnswerState(mathsCtx.isCorrect);
@@ -14,28 +17,22 @@ function TimerRow() {
 
   useEffect(() => {
     setLocalPoints(mathsCtx.localPoints);
-    setTimerValue(1000);
   }, [mathsCtx.localPoints]);
-
-  const [timerValue, setTimerValue] = useState(1000);
-
-  useEffect(() => {
-    timerFunction();
-    console.log("value: ", timerValue);
-  }, [timerValue]);
   
-  function timerFunction() {
-    setTimeout(() => {
-      setTimerValue(timerValue - 100);
-    }, 500);
-  }
+  useEffect(() => {
+    setTimerValue(mathsCtx.timerValue);
+  }, [mathsCtx.timerValue]);
 
   function imageHandler() {
     switch (lastAnswerState) {
-      case true:
+      case "start":
+        return startImg;
+      case "correct":
         return correctImg;
-      default:
+      case "incorrect":
         return incorrectImg;
+      case "outatime":
+        return outatimeImg;
     }
   }
 
