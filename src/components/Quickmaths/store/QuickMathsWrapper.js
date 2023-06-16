@@ -17,26 +17,30 @@ export function QuickMathsWrapper({ children }) {
   const [firstQ, setFirstQ] = useState(randomNum());
   const [secondQ, setSecondQ] = useState(randomNum());
   const [answer, setAnswer] = useState([]);
-  const [timerValue, setTimerValue] = useState(500);
+  const [timerValue, setTimerValue] = useState(1000);
+  const [timerDump, setTimerDump] = useState(null)
 
   const pointsCtx = useContext(Points);
 
   
   useEffect(() => {
-    increment()
+    const decrement = setInterval(() =>{
+      setTimerValue((currentValue) => {
+        if(currentValue === 0 ){
+          setIsCorrect("outatime");
+          newQuestion();
+          resetPointsHandler()
+          return 1000;
+        }
+        return currentValue - 10;
+      })
+    }, 100);
+
+    setTimerDump(decrement)
+
+    return () => clearInterval(decrement);
   }, []);
   
-  function increment() {
-    console.log("trigger warning");
-    setTimerValue(timerValue - 50);
-    setTimeout(() => {
-      increment();
-    }, 500);
-    if (timerValue <= 0) {
-      timesUp();
-      return;
-    }
-  };
 
   const context = {
     localPoints: localPoints,
@@ -72,13 +76,13 @@ export function QuickMathsWrapper({ children }) {
 
   
   function newQuestion() {
-    setTimerValue(1000);
+    setTimerValue(1000)
     firstQHandler();
     secondQHandler();
   }
   
   function randomNum() {
-    return Math.floor(Math.random() * 8) + 1;
+    return Math.floor(Math.random() * 9) + 1;
   }
   
   function firstQHandler() {
