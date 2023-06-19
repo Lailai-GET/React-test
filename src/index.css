@@ -17,19 +17,21 @@ h1 {
 }
 
 .MiniPlayer {
-  width: 300px;
-  height: 200px;
+  width: 305px;
+  height: 210px;
   background-color: rgb(178, 176, 176);
   border: 4px solid black;
 }
 .Hurdle-cell{
   background-color: #C1C1C1;
-  width: 50px;
-  height: 100px;
+  width: 45px;
+  height: 95px;
+  padding-left: 3px;
 }
+
 .Hurdle-img{
-  width: 50px;
-  height: 100px;
+  width: 45px;
+  height: 95px;
 }
 .Space-cell{
   background-color: #C1C1C1;
@@ -46,6 +48,8 @@ h1 {
   background-color: #C1C1C1;
   width: 95px;
   height: 66px;
+  padding: 0px;
+  margin: 0px;
 }
 .Quick-img{
   width: 100%;

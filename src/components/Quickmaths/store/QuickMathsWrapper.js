@@ -38,7 +38,7 @@ export function QuickMathsWrapper({ children }) {
 
     setTimerDump(decrement)
 
-    return () => clearInterval(decrement);
+    return () => clearInterval(timerDump);
   }, []);
   
 
@@ -108,11 +108,6 @@ export function QuickMathsWrapper({ children }) {
   function resetPointsHandler() {
     setLocalPoints(0);
     pointsCtx.resetPoints();
-  }
-  function timesUp() {
-    setIsCorrect("outatime");
-    resetPointsHandler();
-    newQuestion();
   }
 
   return (
