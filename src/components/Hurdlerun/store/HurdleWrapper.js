@@ -3,30 +3,47 @@ import { Keystroke } from "../../../controls/Keystroke";
 
 const HurdleState = createContext({
   isJumping: false,
-  intervalTester: 0,
+  jumpingReset: ()=>{},
 });
 
 export function HurdleWrapper({ children }) {
-  const [jumping, setJumping] = useState(true);
-  const [jumpingOut, setJumpingOut] = useState(jumping);
-  const [intervalTestOut, setIntervalTestOut] = useState(0);
+  const [jumping, setJumping] = useState(false);
+  // const [jumpingOut, setJumpingOut] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIntervalTestOut((currentValue) => {
-        return currentValue + 1;
-      });
-      console.log("parent component useEffect setInterval: ", intervalTestOut);
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     handleOutput();
+  //   }, 3000);
+  // }, []);
+
+  // // useEffect(() => {
+  // //   setJumpingOut(jumping);
+  // // }, [jumping]);
+ 
+  // function handleOutput() {//output til child skal ikke oppdateres før intervallen trigger
+  //   console.log("top level handleOutput. 'jumping' is ", jumping);
+  //   setJumpingOut(() => {
+  //     const updatedValue = jumping;//den leser bare default value
+  //     console.log("checking 'jumping', output should be ", updatedValue);
+  //     return updatedValue;
+  //   });
+  // }
 
   const context = {
-    isJumping: jumpingOut,
-    intervalTester: intervalTestOut,
+    isJumping: jumping,
+    resetJump: handleJumpReset,
   };
 
   function handleKeyPress(e) {
-    if (e.key === " ") setJumping((currentState) => !currentState);
+    if (e.key === " ")
+    //TODO - figure this shit out!
+      setJumping(currentState => !currentState);
+  }
+  function handleJumpReset(){
+    setJumping((currentState) =>{
+      console.log("handleReset 'jumping' ", jumping)
+      if(currentState) return false;
+    })
   }
 
   //bruk en haug med use states, set context først når intevallen trigger

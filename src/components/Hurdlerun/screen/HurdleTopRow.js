@@ -1,10 +1,11 @@
 
 import { useEffect, useState } from "react";
 import { HurdleCell } from "./HurdleCell";
-import { useHurdleState } from "../store/HurdleWrapper";
+import { useInterpState } from "../store/InterpState";
+
 
 function HurdleTopRow() {
-    const jumpCtx = useHurdleState();
+    const jumpCtx = useInterpState();
     const [jumping, setJumping] = useState(jumpCtx.isJumping)
 
     useEffect(()=>{
@@ -12,8 +13,7 @@ function HurdleTopRow() {
         console.log("is it even change? ", jumpCtx.isJumping)
     }, [jumpCtx.isJumping]);
     useEffect(()=>{
-        console.log("child component useContext useEffect: ",jumpCtx.intervalTester)
-    }, [jumpCtx.intervalTester])
+    }, [jumpCtx.isJumping])
 
   return (
     <tr>
