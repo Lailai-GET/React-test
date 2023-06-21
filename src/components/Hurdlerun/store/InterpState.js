@@ -16,26 +16,25 @@ export function InterpWrapper({ children }) {
   }, []);
 
   function handleOutput() {
-    console.log(
-      "handleOutput 'stateCtx.isJumping' bafore any calculations is done ",
-      stateCtx.isJumping
-    );
     setJumpingOut((currentState) => {
+      console.log("handleOutput, setJumpingOut 'stateCtx.isJumping'", stateCtx.isJumping.current);
       if (currentState) {
         const changedValue = !currentState;
         console.log("handleOutput if jumping 'jumpingOut'", changedValue);
         return changedValue;
       }
-      if (!currentState && stateCtx.isJumping) {
+      if (!currentState && stateCtx.isJumping.current) {
         const changedValue = !currentState;
         console.log(
           "handleOutput if not jumping 'stateCtx.isJumping' ",
-          stateCtx.isJumping
+          stateCtx.isJumping.current
         );
         console.log("handleOutput if not jumping 'jumpingOut' ", changedValue);
         return changedValue;
       }
+      return false;
     });
+    stateCtx.resetJump(false);
   }
 
   const context = {

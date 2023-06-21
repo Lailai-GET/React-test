@@ -1,50 +1,36 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Keystroke } from "../../../controls/Keystroke";
 
-const HurdleState = createContext({
-  isJumping: false,
-  jumpingReset: ()=>{},
-});
+const HurdleState =
+  createContext(
+      {
+      isJumping: false,
+      resetJump: ()=>{},
+    }
+  );
 
 export function HurdleWrapper({ children }) {
   const [jumping, setJumping] = useState(false);
-  // const [jumpingOut, setJumpingOut] = useState(false);
+  const jumpingRef = useRef(false);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     handleOutput();
-  //   }, 3000);
-  // }, []);
-
-  // // useEffect(() => {
-  // //   setJumpingOut(jumping);
-  // // }, [jumping]);
- 
-  // function handleOutput() {//output til child skal ikke oppdateres før intervallen trigger
-  //   console.log("top level handleOutput. 'jumping' is ", jumping);
-  //   setJumpingOut(() => {
-  //     const updatedValue = jumping;//den leser bare default value
-  //     console.log("checking 'jumping', output should be ", updatedValue);
-  //     return updatedValue;
-  //   });
-  // }
-
+  useEffect(()=>{
+    jumpingRef.current = jumping;
+  },[jumping]);
   const context = {
-    isJumping: jumping,
-    resetJump: handleJumpReset,
+    isJumping: jumpingRef,
+    resetJump: setJumping,
   };
 
   function handleKeyPress(e) {
     if (e.key === " ")
-    //TODO - figure this shit out!
-      setJumping(currentState => !currentState);
+      //TODO - figure this shit out!
+      setJumping(() => {
+        let updatedValue = true;
+        console.log("keypress, updating 'jumping' to ", updatedValue);
+        return updatedValue;
+      });
   }
-  function handleJumpReset(){
-    setJumping((currentState) =>{
-      console.log("handleReset 'jumping' ", jumping)
-      if(currentState) return false;
-    })
-  }
+
 
   //bruk en haug med use states, set context først når intevallen trigger
   return (
