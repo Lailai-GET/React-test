@@ -16,6 +16,7 @@ export function HurdleWrapper({ children }) {
   useEffect(()=>{
     jumpingRef.current = jumping;
   },[jumping]);
+  
   const context = {
     isJumping: jumpingRef,
     resetJump: setJumping,

@@ -13,6 +13,8 @@ export function InterpWrapper({ children }) {
     const interval = setInterval(() => {
       handleOutput();
     }, 3000);
+
+    return () => clearInterval(interval)
   }, []);
 
   function handleOutput() {

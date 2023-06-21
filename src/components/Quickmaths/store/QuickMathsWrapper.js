@@ -32,7 +32,7 @@ export function QuickMathsWrapper({ children }) {
           resetPointsHandler()
           return 1000;
         }
-        return currentValue - 10;
+        return currentValue - 5;
       })
     }, 100);
 
