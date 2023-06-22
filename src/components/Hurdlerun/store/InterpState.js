@@ -75,12 +75,20 @@ export function InterpWrapper({ children }) {
       if (currentState === 6) return 6;
       if (currentState === 5) return 5;
       if (currentState === 4) return 4;
-      if (animationRef.current >= 3) return 0;
+      if (currentState >= 3) return 0;
       return currentState + 1;
     });
   }
-
+ //Bottom array skal ikke gjøre noe med running animation, sett running animation til å vises i child, verdier fra bottom array kan fortsatt leses i running animation
   function handleProgression() {
+    if(bottomArray.current[3] === 5 && !currentlyJumping.current){
+      setAnimationState(6);
+    }
+    bottomArray.current[3] = bottomArray.current[4];
+    bottomArray.current[4] = bottomArray.current[5];
+    if (randomHurdle()){
+      bottomArray.current[5] = 5;
+    } else bottomArray.current[5] = 0;
   }
 
   function randomHurdle() {
