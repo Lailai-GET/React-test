@@ -6,12 +6,15 @@ const HurdleState =
       {
       isJumping: false,
       resetJump: ()=>{},
+      runAnim: [],
     }
   );
 
 export function HurdleWrapper({ children }) {
   const [jumping, setJumping] = useState(false);
   const jumpingRef = useRef(false);
+
+  const runAnimation = [1, 2, 1, 3, 0, 5, 7];
 
   useEffect(()=>{
     jumpingRef.current = jumping;
@@ -20,14 +23,13 @@ export function HurdleWrapper({ children }) {
   const context = {
     isJumping: jumpingRef,
     resetJump: setJumping,
+    runAnim: runAnimation,
   };
 
   function handleKeyPress(e) {
     if (e.key === " ")
-      //TODO - figure this shit out!
       setJumping(() => {
         let updatedValue = true;
-        console.log("keypress, updating 'jumping' to ", updatedValue);
         return updatedValue;
       });
   }

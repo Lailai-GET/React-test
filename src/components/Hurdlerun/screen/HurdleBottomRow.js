@@ -1,28 +1,23 @@
-
 import { useEffect, useState } from "react";
 import { HurdleCell } from "./HurdleCell";
-import {useInterpState} from "../store/InterpState"
-
+import { useInterpState } from "../store/InterpState";
 
 function HurdleBottomRow() {
-    const jumpCtx = useInterpState();
-    const [jumping, setJumping] = useState(jumpCtx.isJumping);
+  const inputCtx = useInterpState();
+  const [jumping, setJumping] = useState(inputCtx.isJumping);
 
-    useEffect(()=>{
-        setJumping(jumpCtx.isJumping);
-    }, [jumpCtx.isJumping]);
-    useEffect(()=>{
-    }, [jumpCtx.isJumping])
+  useEffect(() => {
+    setJumping(inputCtx.isJumping);
+  }, [inputCtx.isJumping]);
+  useEffect(() => {}, [inputCtx.isJumping]);
+
   return (
     <tr>
-      <HurdleCell state="1" />
-      <HurdleCell state="2" />
-      <HurdleCell state={jumping ? "0": "3"} />
-      <HurdleCell state="5" />
-      <HurdleCell state="6" />
-      <HurdleCell state="7" />
+      {inputCtx.bottomRow.map((stateData) => (
+        <HurdleCell state={stateData} />
+      ))}
     </tr>
   );
 }
 
-export {HurdleBottomRow};
+export { HurdleBottomRow };
