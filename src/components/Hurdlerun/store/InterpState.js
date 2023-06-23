@@ -32,12 +32,15 @@ export function InterpWrapper({ children }) {
   }, []);
 
   useEffect(() => {
+    !currentlyJumping.current
+      ? (bottomArray.current[2] = stateCtx.runAnim[animationRef.current])
+      : (bottomArray.current[2] = 0);
     animationRef.current = animationState;
-    bottomArray.current[2] = stateCtx.runAnim[animationRef.current];
   }, [animationState]);
 
   useEffect(() => {
     currentlyJumping.current = jumpingOut;
+    jumpingOut ? bottomArray.current[2] = 0 : bottomArray.current[2] = stateCtx.runAnim[animationRef.current];
   }, [jumpingOut]);
 
   useEffect(() => {
@@ -84,6 +87,7 @@ export function InterpWrapper({ children }) {
       return 5;
     } else return 0;
   }
+
 
   function handleProgression() {
     if (bottomArray.current[0] === 5 || bottomArray.current[0] === 6) {
