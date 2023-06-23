@@ -10,14 +10,14 @@ import trip from "../img/Trip.png";
 function HurdleCell(props) {
   const pictures = [empty, run1, run2, run3, jump, hurdle, hurdleDown, trip];
 
-  const placeholderState = props.state;
+  const currentState = props.state;
 
   function imageHandler() {
-        return  pictures[parseInt(placeholderState)];
+        return  pictures[parseInt(currentState)];
 
   }
 
-  return <td className="Hurdle-cell"><img className="Hurdle-img" src={imageHandler()}/></td>;
+  return <td className="Hurdle-cell">{props.state <= 9 ? <img className="Hurdle-img" src={imageHandler()}/> : <div>Points: {props.points}</div>}</td>;
 }
 
 export { HurdleCell };

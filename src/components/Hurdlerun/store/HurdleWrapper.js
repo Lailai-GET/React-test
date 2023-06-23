@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { Keystroke } from "../../../controls/Keystroke";
+import { Points } from "../../../store/Points";
 
 const HurdleState =
   createContext(
@@ -7,23 +8,41 @@ const HurdleState =
       isJumping: false,
       resetJump: ()=>{},
       runAnim: [],
+      increasePoints: ()=>{},
+      resetPoints: ()=>{},
+      currentLocalPoints: 0
     }
   );
 
 export function HurdleWrapper({ children }) {
   const [jumping, setJumping] = useState(false);
   const jumpingRef = useRef(false);
+  const pointsCtx = useContext(Points);
+  const [localPoints, setLocalPoints] = useState(0)
 
   const runAnimation = [1, 2, 1, 3];
 
   useEffect(()=>{
     jumpingRef.current = jumping;
   },[jumping]);
+
+  function addPointHandler(){
+    setLocalPoints(localPoints + 1);
+    pointsCtx.addPoint();
+  }
   
+  function resetPointsHandler(){
+    setLocalPoints(0);
+    pointsCtx.resetPoints();
+  }
+
   const context = {
     isJumping: jumpingRef,
     resetJump: setJumping,
     runAnim: runAnimation,
+    increasePoints: addPointHandler,
+    resetPoints: resetPointsHandler,
+    currentLocalPoints: localPoints,
   };
 
   function handleKeyPress(e) {
