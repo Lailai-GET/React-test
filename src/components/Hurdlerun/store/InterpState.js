@@ -57,37 +57,46 @@ export function InterpWrapper({ children }) {
     setJumpingOut((currentState) => {
       if (currentState) {
         const changedValue = !currentState;
-        setAnimationState(0);
         return changedValue;
       }
       if (!currentState && stateCtx.isJumping.current) {
         const changedValue = !currentState;
-        setAnimationState(4);
         return changedValue;
       }
       return false;
     });
+
     stateCtx.resetJump(false);
   }
 
   function handleRunOutput() {
     setAnimationState((currentState) => {
-      if (currentState === 6) return 6;
-      if (currentState === 5) return 5;
-      if (currentState === 4) return 4;
       if (currentState >= 3) return 0;
       return currentState + 1;
     });
   }
- //Bottom array skal ikke gjøre noe med running animation, sett running animation til å vises i child, verdier fra bottom array kan fortsatt leses i running animation
+
+  function handleHurdlePostRunner() {
+    if (bottomArray.current[2] === 7) {
+      trippin.current = false;
+      return 6;
+    } else if (bottomArray.current[2] === 5) {
+      return 5;
+    } else return 0;
+  }
+
   function handleProgression() {
-    if(bottomArray.current[3] === 5 && !currentlyJumping.current){
-      setAnimationState(6);
+    if (bottomArray.current[0] === 5 || bottomArray.current[0] === 6) {
+      hurdleOnStage.current = false;
+      bottomArray.current[0] = 0;
     }
+    bottomArray.current[0] = bottomArray.current[1];
+    bottomArray.current[1] = handleHurdlePostRunner();
     bottomArray.current[3] = bottomArray.current[4];
     bottomArray.current[4] = bottomArray.current[5];
-    if (randomHurdle()){
+    if (randomHurdle()) {
       bottomArray.current[5] = 5;
+      hurdleOnStage.current = true;
     } else bottomArray.current[5] = 0;
   }
 

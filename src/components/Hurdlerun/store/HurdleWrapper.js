@@ -14,7 +14,7 @@ export function HurdleWrapper({ children }) {
   const [jumping, setJumping] = useState(false);
   const jumpingRef = useRef(false);
 
-  const runAnimation = [1, 2, 1, 3, 0, 5, 7];
+  const runAnimation = [1, 2, 1, 3];
 
   useEffect(()=>{
     jumpingRef.current = jumping;
