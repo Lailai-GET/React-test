@@ -152,7 +152,7 @@ export function InterpWrapper({ children }) {
   }
 
   function randomHurdle() {
-    if (!hurdleOnStage.current) {
+    if (!hurdleOnStage.current && bottomArray.current[5] !== 5) {
       let randomChance = [false, true];
       return randomChance[Math.floor(Math.random() * randomChance.length)];
     }

@@ -13,9 +13,9 @@ function App() {
       <h1>Points: {pointsCtx.points}</h1>
       {/* bruk context provider til å legge til poeng fra alle spill */}
       <div className="GameBox">
-        <HurdleRun text="enkelt spill som du styrer med spacebar" />
-        <PersonalSpace text="bruk piltaster for å flytte og skyte" />
-        <QuickMaths text="tall og enter for å løse matteoppgaver" />
+        <HurdleRun/>
+        <PersonalSpace/>
+        <QuickMaths/>
       </div>
     </div>
   );
