@@ -28,6 +28,16 @@ h1 {
   height: 95px;
   padding-left: 3px;
 }
+.Instructions{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.Instruction-box{
+  width: 305px;
+  background-color: rgb(178, 176, 176);
+  border: 4px solid black;
+}
 
 .Hurdle-img{
   width: 45px;

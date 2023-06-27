@@ -42,7 +42,7 @@ function TimerRow() {
         <img className="Quick-img" src={imageHandler()} />
       </td>
       <td className="Quick-cell">
-        <label for="time-left" />
+        <label htmlFor="time-left" />
         <meter id="time-left" min="0" max="1000" value={timerValue}></meter>
       </td>
       <td className="Quick-cell">Points: {localPoints}</td>

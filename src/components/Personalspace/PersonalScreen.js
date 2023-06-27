@@ -13,19 +13,19 @@ function PersonalScreen() {
               return (
                 <td key={cellIndex}>
                   <PersonalCell img={cell} />
-                  {console.log("what the num in cell?!",cell)}
+                  {/* {console.log("what the num in cell?!",cell)} */}
                 </td>
               );
             })}
           </tr>
         );
       })}
-      {console.log(
+      {/* {console.log(
         "what we working with",
         personalCtx.screenCells.map((data) => {
           return data;
         })
-      )}
+      )} */}
     </table>
   );
 }

@@ -10,7 +10,6 @@ function HurdleTopRow() {
 
     useEffect(()=>{
         setJumping(jumpCtx.isJumping);
-        console.log("is it even change? ", jumpCtx.isJumping)
     }, [jumpCtx.isJumping]);
     useEffect(()=>{
     }, [jumpCtx.isJumping])

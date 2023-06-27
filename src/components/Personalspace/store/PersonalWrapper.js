@@ -16,7 +16,6 @@ export function PresonalWrapper({ children }) {
   const [shipDirection, setShipDirection] = useState(0);
   const shipVelocity = useRef(0);
   const screenRef = useRef(generateFirstArray());
-  const shipAnimation = [3, 4];
 
   useEffect(() => {
     const progression = setInterval(handleProgression, 1000);
@@ -32,24 +31,42 @@ export function PresonalWrapper({ children }) {
 
   function handleProgression() {
     handleShipPos();
-    //handleShipState();
+    handleShipState();
     //handleAlienShoot();
     //handleShotDirection();
     //handleSplotion();
-    //updateScreen();
+  }
+  function handleShipState() {
+    shipApperance.current === 3 ? setShipState(4) : setShipState(3);
   }
   function handleShipPos() {
     switch (shipVelocity.current) {
       case 0:
-        return;
+        break;
       case 1:
-        shipPos.current =shipPos.current - 1;
-          // shipPos.current === 0 ? shipPos.current : shipPos.current - 1;
+        shipPos.current =
+          shipPos.current === 0
+            ? shipPos.current
+            : shipApperance.current !== 5
+            ? shipPos.current - 1
+            : shipPos.current;
         break;
       case 2:
-        shipPos.current =shipPos.current + 1
-          // shipPos.current === 5 ? shipPos.current : shipPos.current + 1;
+        shipPos.current =
+          shipPos.current === 5
+            ? shipPos.current
+            : shipApperance.current !== 5
+            ? shipPos.current + 1
+            : shipPos.current;
         break;
+    }
+    setShipDirection(0);
+    for (let i = 0; i < screenRef.current.length; i++) {
+      for (let j = 0; j < screenRef.current[i].length; j++) {
+        if (i === 3 && j === shipPos.current) {
+          screenRef.current[i][j] = shipApperance.current;
+        } else if (i === 3) screenRef.current[i][j] = 0;
+      }
     }
   }
 
@@ -65,7 +82,7 @@ export function PresonalWrapper({ children }) {
   const handleKeyPress = (e) => {
     //temp placeholder
     if (e.key === "w" || e.key === "ArrowUp") {
-      setShipState(4);
+      setShipState(5);
     }
     if (e.key === "a" || e.key === "ArrowLeft") {
       setShipDirection(1);

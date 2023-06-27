@@ -9,13 +9,20 @@ function App() {
 
   return (
     <div className="App">
-
       <h1>Points: {pointsCtx.points}</h1>
       {/* bruk context provider til å legge til poeng fra alle spill */}
       <div className="GameBox">
-        <HurdleRun/>
-        <PersonalSpace/>
-        <QuickMaths/>
+        <HurdleRun />
+        <PersonalSpace />
+        <QuickMaths />
+      </div>
+      <div className="Instructions">
+        <p className="Instruction-box">press space when hurdle is in front of the runner</p>
+        <p className="Instruction-box">left: a/←, right: d/→, shoot: w/↑</p>
+        <p className="Instruction-box">
+          press a number to write it, enter to submit, backspace to remove
+          number. Answer within the time limit
+        </p>
       </div>
     </div>
   );
