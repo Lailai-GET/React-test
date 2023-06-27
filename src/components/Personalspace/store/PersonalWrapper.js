@@ -19,7 +19,6 @@ export function PresonalWrapper({ children }) {
 
   useEffect(() => {
     const progression = setInterval(handleProgression, 1000);
-
     return () => clearInterval(progression);
   }, []);
   useEffect(() => {
@@ -32,12 +31,9 @@ export function PresonalWrapper({ children }) {
   function handleProgression() {
     handleShipPos();
     handleShipState();
-    //handleAlienShoot();
-    //handleShotDirection();
+    handleAlienShoot();
+    handleShotDirection();
     //handleSplotion();
-  }
-  function handleShipState() {
-    shipApperance.current === 3 ? setShipState(4) : setShipState(3);
   }
   function handleShipPos() {
     switch (shipVelocity.current) {
@@ -66,6 +62,36 @@ export function PresonalWrapper({ children }) {
         if (i === 3 && j === shipPos.current) {
           screenRef.current[i][j] = shipApperance.current;
         } else if (i === 3) screenRef.current[i][j] = 0;
+      }
+    }
+  }
+  function handleShipState() {
+    shipApperance.current === 3 ? setShipState(4) : setShipState(3);
+  }
+  function handleAlienShoot() {
+    for (let i = 0; i < screenRef.current[0].length; i++) {
+      screenRef.current[0][i] === 1
+        ? (screenRef.current[0][i] = randomShoot())
+        : screenRef.current[0][i] === 2
+        ? (screenRef.current[0][i] = 1)
+        : screenRef.current[0][i] === 9
+        ? (screenRef.current[0][i] = 0)
+        : (screenRef.current[0][i] = 0);
+    }
+  }
+  function randomShoot() {
+    const shootRandom = Math.floor(Math.random() * 6);
+    return shootRandom === 5 ? 2 : 1;
+  }
+  function handleShotDirection(){
+    for(let i = 0; i < screenRef.current.length; i++){
+      for(let j = 0; j < screenRef.current[i].length; j++){
+        if(i === 1 && screenRef.current[i-1][j] === 2){
+          screenRef.current[i][j] = 6;
+        }
+        if(i === 2 && screenRef.current[i+1][j] === 5){
+          screenRef.current[i][j] = 8;
+        }
       }
     }
   }
