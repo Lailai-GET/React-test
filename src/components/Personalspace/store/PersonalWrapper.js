@@ -10,13 +10,48 @@ const PersonalStore = createContext({
 export function PresonalWrapper({ children }) {
   const pointsCtx = useContext(Points);
   const [count, setCount] = useState(0);
-  const [shipState, setShipState] = useState(2);
-  const shipApperance = useRef(2);
+  const [shipState, setShipState] = useState(3);
+  const shipApperance = useRef(3);
   const shipPos = useRef(0);
   const [shipDirection, setShipDirection] = useState(0);
   const shipVelocity = useRef(0);
   const screenRef = useRef(generateFirstArray());
-  const shipAnimation = [2, 3];
+  const shipAnimation = [3, 4];
+
+  useEffect(() => {
+    const progression = setInterval(handleProgression, 1000);
+
+    return () => clearInterval(progression);
+  }, []);
+  useEffect(() => {
+    shipApperance.current = shipState;
+  }, [shipState]);
+  useEffect(() => {
+    shipVelocity.current = shipDirection;
+  }, [shipDirection]);
+
+  function handleProgression() {
+    handleShipPos();
+    //handleShipState();
+    //handleAlienShoot();
+    //handleShotDirection();
+    //handleSplotion();
+    //updateScreen();
+  }
+  function handleShipPos() {
+    switch (shipVelocity.current) {
+      case 0:
+        return;
+      case 1:
+        shipPos.current =shipPos.current - 1;
+          // shipPos.current === 0 ? shipPos.current : shipPos.current - 1;
+        break;
+      case 2:
+        shipPos.current =shipPos.current + 1
+          // shipPos.current === 5 ? shipPos.current : shipPos.current + 1;
+        break;
+    }
+  }
 
   function addPointHandler() {
     pointsCtx.addPoint();
@@ -44,11 +79,11 @@ export function PresonalWrapper({ children }) {
     let generatedArray = [];
     for (let i = 0; i < 4; i++) {
       generatedArray[i] = [];
-      for (let j = 0; j < 5; j++) {
+      for (let j = 0; j < 6; j++) {
         if (i < 1) {
           generatedArray[i][j] = 1;
         } else if (i === 3 && j === shipPos.current) {
-           generatedArray[i][j] = shipApperance.current;
+          generatedArray[i][j] = shipApperance.current;
         } else generatedArray[i][j] = 0;
       }
     }

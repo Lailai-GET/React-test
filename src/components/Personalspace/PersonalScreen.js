@@ -6,16 +6,19 @@ function PersonalScreen() {
 
   return (
     <table>
-      {personalCtx.screenCells[0].map((data) => {
-
-          return (
-            <tr>
-              {personalCtx.screenCells[data].map((cell) => {
-                return <td><PersonalCell img="1"/></td>;
-              })}
-            </tr>
-          );
-        
+      {personalCtx.screenCells.map((row, rowIndex) => {
+        return (
+          <tr key={rowIndex}>
+            {row.map((cell, cellIndex) => {
+              return (
+                <td key={cellIndex}>
+                  <PersonalCell img={cell} />
+                  {console.log("what the num in cell?!",cell)}
+                </td>
+              );
+            })}
+          </tr>
+        );
       })}
       {console.log(
         "what we working with",
