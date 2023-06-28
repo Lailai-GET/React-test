@@ -29,11 +29,11 @@ export function PresonalWrapper({ children }) {
   }, [shipDirection]);
 
   function handleProgression() {
+    handleSplotion();
     handleShipPos();
     handleShipState();
-    handleAlienShoot();
+    handleShoot();
     handleShotDirection();
-    //handleSplotion();
   }
   function handleShipPos() {
     switch (shipVelocity.current) {
@@ -66,9 +66,13 @@ export function PresonalWrapper({ children }) {
     }
   }
   function handleShipState() {
-    shipApperance.current === 3 ? setShipState(4) : setShipState(3);
+    shipApperance.current === 9
+      ? setShipState(9)
+      : shipApperance.current === 3
+      ? setShipState(4)
+      : setShipState(3);
   }
-  function handleAlienShoot() {
+  function handleShoot() {
     for (let i = 0; i < screenRef.current[0].length; i++) {
       screenRef.current[0][i] === 1
         ? (screenRef.current[0][i] = randomShoot())
@@ -83,14 +87,78 @@ export function PresonalWrapper({ children }) {
     const shootRandom = Math.floor(Math.random() * 6);
     return shootRandom === 5 ? 2 : 1;
   }
-  function handleShotDirection(){
-    for(let i = 0; i < screenRef.current.length; i++){
-      for(let j = 0; j < screenRef.current[i].length; j++){
-        if(i === 1 && screenRef.current[i-1][j] === 2){
-          screenRef.current[i][j] = 6;
+  function handleShotDirection() {
+    for (let i = 0; i < screenRef.current.length; i++) {
+      for (let j = 0; j < screenRef.current[i].length; j++) {
+        if (
+          i >= 1 &&
+          (screenRef.current[i - 1][j] === 2 ||
+            screenRef.current[i - 1][j] === 6 ||
+            screenRef.current[i - 1][j] === 7)
+        ) {
+          if (
+            screenRef.current[i - 1][j] !== 1 ||
+            screenRef.current[i - 1][j] !== 2
+          ) {
+            screenRef.current[i][j] = 0;
+          }
+          if (
+            i < 3 &&
+            (screenRef.current[i + 1][j] === 8 ||
+              screenRef.current[i + 1][j] === 7)
+          ) {
+            screenRef.current[i][j] = 7;
+          } else screenRef.current[i][j] = 6;
         }
-        if(i === 2 && screenRef.current[i+1][j] === 5){
-          screenRef.current[i][j] = 8;
+        if (
+          i < 3 &&
+          (screenRef.current[i + 1][j] === 5 ||
+            screenRef.current[i + 1][j] === 8 ||
+            screenRef.current[i + 1][j] === 7)
+        ) {
+          if (
+            screenRef.current[i][j] !== 7 &&
+            (screenRef.current[i + 1][j] !== 3 ||
+              screenRef.current[i + 1][j] !== 4 ||
+              screenRef.current[i + 1][j] !== 5)
+          ) {
+            screenRef.current[i + 1][j] = 0;
+          }
+          {
+            if (
+              i >= 1 &&
+              i < 3 &&
+              (screenRef.current[i - 1][j] === 6 ||
+                screenRef.current[i + 1][j] === 7)
+            ) {
+              screenRef.current[i][j] = 7;
+            } else screenRef.current[i][j] = 8;
+          }
+        }
+      }
+    }
+  }
+  function handleSplotion() {
+    for (let i = 0; i < screenRef.current.length; i++) {
+      for (let j = 0; j < screenRef.current[i].length; j++) {
+        if (screenRef.current[i][j] === 9) screenRef.current[i][j] = 0;
+        if (
+          i === 0 &&
+          (screenRef.current[i][j] === 1 || screenRef.current[i][j] === 2) &&
+          (screenRef.current[i + 1][j] === 8 ||
+            screenRef.current[i + 1][j] === 7)
+        ) {
+          screenRef.current[i][j] = 9;
+        }
+        if (
+          i === 3 &&
+          (screenRef.current[i][j] === 3 ||
+            screenRef.current[i][j] === 4 ||
+            screenRef.current[i][j] === 5) &&
+          (screenRef.current[i - 1][j] === 6 ||
+            screenRef.current[i - 1][j] === 7)
+        ) {
+          screenRef.current[i][j] = 9;
         }
       }
     }
