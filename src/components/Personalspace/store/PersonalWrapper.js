@@ -90,120 +90,22 @@ export function PresonalWrapper({ children }) {
   function handleShotDirection() {
     for (let i = 0; i < screenRef.current.length; i++) {
       for (let j = 0; j < screenRef.current[i].length; j++) {
-        if (i === 2) {
-          //third row
-          if (screenRef.current[i + 1][j] === 5) {
-            //ship is shooting
-            if (screenRef.current[i - 1][j] === 6) {
-              //incoming alien shot
-              screenRef.current[i][j] = 7;
-            } else screenRef.current[i][j] = 8;
-          }
-          if (screenRef.current[i - 1][j] === 6) {
-            //incoming alienShot
-            if (screenRef.current[i + 1][j] === 5) {
-              //ship is shooting
-              screenRef.current[i][j] = 7;
-            } else screenRef.current[i][j] = 6;
-          }
-          if(screenRef.current[i][j] === 7 || screenRef.current[i][j] === 8){
-            // shipShot or shotBoth currently in cell
-            if(screenRef.current[i-1][j] === 6 || screenRef.current[i-1][j] === 7){
-              // shotAlien incoming
-              if(screenRef.current[i+1][j] === 5){
-                // ship is shooting
-                screenRef.current[i][j] = 7;
-              }else screenRef.current[i][j] = 6;
-            }else if(screenRef.current[i+1][j] === 5){
-              //ship is shooting
-              if(screenRef.current[i-1][j] === 6 || screenRef.current[i-1][j] === 7){
-                //shotAlien incoming
-                screenRef.current[i][j] = 7;
-              }else screenRef.current[i][j] = 8;
-            }else screenRef.current[i][j] = 0;
-          }          
-          if(screenRef.current[i][j] === 6){
-            //shotAlien currently in cell
-            if(screenRef.current[i-1][j] === 6){
-              //shotAlien incoming
-              if(screenRef.current[i+1][j] === 5){
-                //ship shooting
-                screenRef.current[i][j] = 8;
-              }else screenRef.current[i][j] = 6;
-            }else if(screenRef.current[i+1][j] === 2){
-              // ship shooting
-              if(screenRef.current[i-1][j] === 6){
-                //shotAlien incoming
-                screenRef.current[i][j] = 7;
-              }else screenRef.current[i][j] = 8;
-            }else screenRef.current[i][j] = 0;
-          }
-          if(screenRef.current[i-1][j] === 6 || screenRef.current[i-1][j] === 7){
-            //shotAlien incoming
-            if(screenRef.current[i+1][j] === 5){
-              //ship shooting
-              screenRef.current[i][j] = 7;
-            }else screenRef.current[i][j] = 6;
-          }
-        }
-
-        if (i === 1) {
-          //second row
-          if(screenRef.current[i][j] === 8){
-            //shotShip currently in cell
-            if(screenRef.current[i-1][j] === 5){
-              // alienShoot
-              if(screenRef.current[i+1][j] === 8|| screenRef.current[i+1][j] === 7){
-                // shotShip incoming
-                screenRef.current[i][j] = 7;
-              }else screenRef.current[i][j] = 5
-            }else screenRef.current[i][j] = 0;
-          }
-          if (screenRef.current[i][j] === 6) {
-            //shotAlien currently in cell
-            if (screenRef.current[i + 1][j] === 8) {
-              //shipshot incoming
-              if (screenRef.current[i - 1][j] === 2) {
-                //ailien shooting
-                screenRef.current[i][j] = 7;
-              } else screenRef.current[i][j] = 8;
-            } else if (screenRef.current[i - 1][j] === 2) {
-              screenRef.current[i][j] = 6;
-            } else screenRef.current[i][j] = 0;
-          }
-          if (screenRef.current[i][j] === 7) {
-            //shotBoth currently in cell
-            if (screenRef.current[i - 1][j] === 2) {
-              // shotAilen incoming
-              if (screenRef.current[i + 1][j] === 8) {
-                //shotShip incoming
-                screenRef.current[i][j] = 7;
-              } else screenRef.current[i][j] = 6;
-            } else if (screenRef.current[i + 1][j] === 8) {
-              //shipShot incoming
-              if (screenRef.current[i - 1][j] === 2) {
-                //shotAlien incoming
-                screenRef.current[i][j] = 7;
-              } else screenRef.current[i][j] = 8;
-            } else screenRef.current[i][j] = 0;
-          }
-          if (screenRef.current[i - 1][j] === 2) {
-            //alien is shooting
-            if (
-              screenRef.current[i + 1][j] === 7 ||
-              screenRef.current[i + 1][j] === 8
-            ) {
-              //alien shoots, but shipShot incoming
-              screenRef.current[i][j] = 7;
-            } else screenRef.current[i][j] = 6;
+        if (i === 1 || i === 2) {
+          if (screenRef.current[i-1][j] === 2 || screenRef.current[i -1][j] === 6){
+            screenRef.current[i][j] = 6;
           }
           if (
+            screenRef.current[i + 1][j] === 5 ||
             screenRef.current[i + 1][j] === 7 ||
             screenRef.current[i + 1][j] === 8
           ) {
-            //shipShot incoming
-            if (screenRef.current[i - 1][j] === 2) {
-              //alien is shooting
+            //shotShip incoming
+            if (
+              screenRef.current[i - 1][j] === 2 ||
+              screenRef.current[i - 1][j] === 6 ||
+              screenRef.current[i - 1][j] === 7
+            ) {
+              //shotAlien incoming
               screenRef.current[i][j] = 7;
             } else screenRef.current[i][j] = 8;
           }
