@@ -24,6 +24,8 @@ function App() {
           number. Answer within the time limit
         </p>
       </div>
+      <h1>Last score: {pointsCtx.lastPoints}</h1>
+      <h1>High Score: {pointsCtx.highScore}</h1>
     </div>
   );
 }
