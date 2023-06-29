@@ -1,0 +1,1 @@
+winget install OpenJs.NodeJS.LTS
