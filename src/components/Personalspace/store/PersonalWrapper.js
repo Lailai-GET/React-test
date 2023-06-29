@@ -30,7 +30,7 @@ export function PresonalWrapper({ children }) {
   }, [shipDirection]);
 
   function handleProgression() {
-    handleShotDirection();
+    handleShotShipDirection();
     handleShipPos();
     handleShipState();
     handleAlienShoot();
@@ -87,49 +87,8 @@ export function PresonalWrapper({ children }) {
     const shootRandom = Math.floor(Math.random() * 6);
     return shootRandom === 5 ? 2 : 1;
   }
-  function handleShotDirection() {
-    for (let i = 0; i < screenRef.current.length; i++) {
-      for (let j = 0; j < screenRef.current[i].length; j++) {
-        if (i === 1 || i === 2) {
-          if (screenRef.current[i-1][j] === 2 || screenRef.current[i -1][j] === 6){
-            screenRef.current[i][j] = 6;
-          }
-          if (
-            screenRef.current[i + 1][j] === 5 ||
-            screenRef.current[i + 1][j] === 7 ||
-            screenRef.current[i + 1][j] === 8
-          ) {
-            //shotShip incoming
-            if (
-              screenRef.current[i - 1][j] === 2 ||
-              screenRef.current[i - 1][j] === 6 ||
-              screenRef.current[i - 1][j] === 7
-            ) {
-              //shotAlien incoming
-              screenRef.current[i][j] = 7;
-            } else screenRef.current[i][j] = 8;
-          }
-        }
-
-        if (i === 0) {
-          //top row
-          if (
-            screenRef.current[i][j] === 9 ||
-            screenRef.current[i][j] === 0 ||
-            screenRef.current[i][j] === 8
-          ) {
-            //empty or splotion or shipShot
-            if (
-              screenRef.current[i + 1][j] === 7 ||
-              screenRef.current[i + 1][j] === 8
-            ) {
-              //shipShot incoming
-              screenRef.current[i][j] = 8;
-            } else screenRef.current[i][j] = 0;
-          }
-        }
-      }
-    }
+  function handleShotShipDirection() {
+   
   }
 
   function addPointHandler() {
