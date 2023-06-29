@@ -21,7 +21,7 @@ function HurdleTopRow() {
       <HurdleCell state={jumping ? "4" : "0"} />
       <HurdleCell state="0" />
       <HurdleCell state="0" />
-      <HurdleCell state="10" points={jumpCtx.localPoints}/>
+      <HurdleCell state="0" />
     </tr>
   );
 }
