@@ -9,13 +9,25 @@ const PersonalStore = createContext({
 
 export function PresonalWrapper({ children }) {
   const pointsCtx = useContext(Points);
-  const [count, setCount] = useState(0);
+  const [localPoints, setLocalPoints] = useState(0);
   const [shipState, setShipState] = useState(3);
   const shipApperance = useRef(3);
   const shipPos = useRef(0);
   const [shipDirection, setShipDirection] = useState(0);
   const shipVelocity = useRef(0);
   const screenRef = useRef(generateFirstArray());
+  const shipShotRef = useRef([
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+  ]);
+  const alienShotRef = useRef([
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+  ]);
 
   useEffect(() => {
     const progression = setInterval(handleProgression, 1000);
@@ -30,11 +42,79 @@ export function PresonalWrapper({ children }) {
   }, [shipDirection]);
 
   function handleProgression() {
-    handleShotShipDirection();
-    handleShipPos();
-    handleShipState();
     handleAlienShoot();
-    //handleSplotion();
+    handleShipState();
+    handleShipPos();
+    handleShotAlienDirection();
+    handleShotShipDirection();
+    handleScreenShotUpdate();
+    handleSplotion();
+    handleAliensGone();
+  }
+  function handleAliensGone() {
+    let alienCount = 0;
+    for (let i = 0; i < screenRef.current[0].length; i++) {
+      alienCount =
+        screenRef.current[0][i] === 1
+          ? alienCount + 1
+          : screenRef.current[0][i] === 2
+          ? alienCount + 1
+          : alienCount;
+    }
+    if (alienCount === 0) screenRef.current = generateFirstArray();
+  }
+  function handleShotShipDirection() {
+    for (let i = 0; i < shipShotRef.current.length; i++) {
+      for (let j = 0; j < shipShotRef.current[i].length; j++) {
+        if (i === 3) {
+          if (screenRef.current[i][j] === 5) {
+            //shipShoot
+            shipShotRef.current[i][j] = 1;
+          } else shipShotRef.current[i][j] = 0;
+        } else if (shipShotRef.current[i + 1][j] === 1) {
+          shipShotRef.current[i][j] = 1;
+        } else shipShotRef.current[i][j] = 0;
+      }
+    }
+  }
+  function handleShotAlienDirection() {
+    for (let i = alienShotRef.current.length - 1; i >= 0; i--) {
+      for (let j = 0; j < alienShotRef.current[i].length; j++) {
+        if (i === 0) {
+          if (screenRef.current[i][j] === 2) {
+            // alienShoot
+            alienShotRef.current[i][j] = 1;
+          } else alienShotRef.current[i][j] = 0;
+        } else if (alienShotRef.current[i - 1][j] === 1) {
+          alienShotRef.current[i][j] = 1;
+        } else alienShotRef.current[i][j] = 0;
+      }
+    }
+  }
+  function handleScreenShotUpdate() {
+    for (let i = 0; i < screenRef.current.length; i++) {
+      for (let j = 0; j < screenRef.current[i].length; j++) {
+        if (
+          screenRef.current[i][j] !== 1 &&
+          screenRef.current[i][j] !== 2 &&
+          screenRef.current[i][j] !== 3 &&
+          screenRef.current[i][j] !== 4 &&
+          screenRef.current[i][j] !== 5 &&
+          screenRef.current[i][j] !== 9
+        ) {
+          screenRef.current[i][j] =
+            shipShotRef.current[i][j] === 1
+              ? alienShotRef.current[i][j] === 1
+                ? 7
+                : 8
+              : alienShotRef.current[i][j] === 1
+              ? shipShotRef.current[i][j] === 1
+                ? 7
+                : 6
+              : 0;
+        }
+      }
+    }
   }
   function handleShipState() {
     shipApperance.current === 3 ? setShipState(4) : setShipState(3);
@@ -87,17 +167,36 @@ export function PresonalWrapper({ children }) {
     const shootRandom = Math.floor(Math.random() * 6);
     return shootRandom === 5 ? 2 : 1;
   }
-  function handleShotShipDirection() {
-   
+  function handleSplotion() {
+    for (let i = 0; i < screenRef.current.length; i++) {
+      for (let j = 0; j < screenRef.current[i].length; j++) {
+        if (
+          shipShotRef.current[i][j] === 1 &&
+          (screenRef.current[i][j] === 1 || screenRef.current[i][j] === 2)
+        ) {
+          addPointHandler();
+          screenRef.current[i][j] = 9;
+        } else if (
+          alienShotRef.current[i][j] === 1 &&
+          (screenRef.current[i][j] === 3 ||
+            screenRef.current[i][j] === 4 ||
+            screenRef.current[i][j] === 5)
+        ) {
+          resetPointsHandler();
+          screenRef.current[i][j] = 9;
+        } else if (screenRef.current[i][j] === 9) {
+          screenRef.current[i][j] = 0;
+        }
+      }
+    }
   }
-
   function addPointHandler() {
+    setLocalPoints(localPoints + 1);
     pointsCtx.addPoint();
-    setCount(count + 1);
   }
   function resetPointsHandler() {
+    setLocalPoints(0);
     pointsCtx.resetPoints();
-    setCount(0);
   }
 
   const handleKeyPress = (e) => {
@@ -126,7 +225,7 @@ export function PresonalWrapper({ children }) {
     }
     return generatedArray;
   }
-  const context = { screenCells: screenRef.current, localPoints: count };
+  const context = { screenCells: screenRef.current, localPoints: localPoints };
 
   return (
     <PersonalStore.Provider value={context}>
