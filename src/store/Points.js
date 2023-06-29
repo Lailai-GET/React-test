@@ -8,10 +8,10 @@ export function PointWrapper(props) {
   const [currentPoints, setCurrentPoints] = useState(0);
 
   function addPointHandler() {
-    setCurrentPoints(currentPoints + 1);
+    setCurrentPoints((current) => current + 1);
   }
   function resetPointsHandler() {
-    setCurrentPoints(currentPoints - currentPoints);
+    setCurrentPoints(0);
   }
   const context = {
     points: currentPoints,

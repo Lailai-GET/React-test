@@ -191,6 +191,7 @@ export function PresonalWrapper({ children }) {
     }
   }
   function addPointHandler() {
+    console.log("localPoints personal",localPoints)
     setLocalPoints(localPoints + 1);
     pointsCtx.addPoint();
   }
